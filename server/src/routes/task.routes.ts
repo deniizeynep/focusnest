@@ -1,6 +1,6 @@
-import { Router } from "express";
+import { Router, type RequestHandler } from "express";
 import { prisma } from "../lib/prisma";
-import { authMiddleware, AuthRequest } from "../middleware/authMiddleware";
+import { authMiddleware, type AuthRequest } from "../middleware/authMiddleware";
 
 function getParamValue(value: string | string[] | undefined) {
   if (Array.isArray(value)) return value[0];
@@ -11,12 +11,13 @@ const router = Router();
 
 router.use(authMiddleware);
 
-router.get("/", async (req: AuthRequest, res) => {
+const getTasks: RequestHandler = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = (req as AuthRequest).userId;
 
     if (!userId) {
-      return res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      return;
     }
 
     const tasks = await prisma.task.findMany({
@@ -31,19 +32,19 @@ router.get("/", async (req: AuthRequest, res) => {
       },
     });
 
-    return res.json({ tasks });
+    res.json({ tasks });
   } catch (error) {
-    return res.status(500).json({ message: "Görevler alınamadı." });
+    res.status(500).json({ message: "Görevler alınamadı." });
   }
-});
+};
 
-// Yeni görev oluştur
-router.post("/", async (req: AuthRequest, res) => {
+const createTask: RequestHandler = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = (req as AuthRequest).userId;
 
     if (!userId) {
-      return res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      return;
     }
 
     const {
@@ -57,7 +58,8 @@ router.post("/", async (req: AuthRequest, res) => {
     } = req.body;
 
     if (!title || !title.trim()) {
-      return res.status(400).json({ message: "Görev adı zorunludur." });
+      res.status(400).json({ message: "Görev adı zorunludur." });
+      return;
     }
 
     const task = await prisma.task.create({
@@ -74,23 +76,25 @@ router.post("/", async (req: AuthRequest, res) => {
       },
     });
 
-    return res.status(201).json({ task });
+    res.status(201).json({ task });
   } catch (error) {
-    return res.status(500).json({ message: "Görev oluşturulamadı." });
+    res.status(500).json({ message: "Görev oluşturulamadı." });
   }
-});
+};
 
-router.patch("/:id", async (req: AuthRequest, res) => {
+const updateTask: RequestHandler = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = (req as AuthRequest).userId;
     const taskId = getParamValue(req.params.id);
 
     if (!taskId) {
-      return res.status(400).json({ message: "Task id is required" });
+      res.status(400).json({ message: "Task id is required" });
+      return;
     }
 
     if (!userId) {
-      return res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      return;
     }
 
     const existingTask = await prisma.task.findFirst({
@@ -101,7 +105,8 @@ router.patch("/:id", async (req: AuthRequest, res) => {
     });
 
     if (!existingTask) {
-      return res.status(404).json({ message: "Görev bulunamadı." });
+      res.status(404).json({ message: "Görev bulunamadı." });
+      return;
     }
 
     const {
@@ -139,23 +144,25 @@ router.patch("/:id", async (req: AuthRequest, res) => {
       },
     });
 
-    return res.json({ task: updatedTask });
+    res.json({ task: updatedTask });
   } catch (error) {
-    return res.status(500).json({ message: "Görev güncellenemedi." });
+    res.status(500).json({ message: "Görev güncellenemedi." });
   }
-});
+};
 
-router.delete("/:id", async (req: AuthRequest, res) => {
+const deleteTask: RequestHandler = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = (req as AuthRequest).userId;
     const taskId = getParamValue(req.params.id);
 
     if (!taskId) {
-      return res.status(400).json({ message: "Task id is required" });
+      res.status(400).json({ message: "Task id is required" });
+      return;
     }
 
     if (!userId) {
-      return res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      return;
     }
 
     const existingTask = await prisma.task.findFirst({
@@ -166,7 +173,8 @@ router.delete("/:id", async (req: AuthRequest, res) => {
     });
 
     if (!existingTask) {
-      return res.status(404).json({ message: "Görev bulunamadı." });
+      res.status(404).json({ message: "Görev bulunamadı." });
+      return;
     }
 
     await prisma.task.delete({
@@ -175,10 +183,15 @@ router.delete("/:id", async (req: AuthRequest, res) => {
       },
     });
 
-    return res.json({ message: "Görev silindi." });
+    res.json({ message: "Görev silindi." });
   } catch (error) {
-    return res.status(500).json({ message: "Görev silinemedi." });
+    res.status(500).json({ message: "Görev silinemedi." });
   }
-});
+};
+
+router.get("/", getTasks);
+router.post("/", createTask);
+router.patch("/:id", updateTask);
+router.delete("/:id", deleteTask);
 
 export default router;

@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 export interface AuthRequest extends Request {
@@ -24,10 +24,9 @@ export function authMiddleware(
     };
 
     req.userId = decoded.userId;
-    next();
+
+    return next();
   } catch {
-    return res
-      .status(401)
-      .json({ message: "Geçersiz veya süresi dolmuş token." });
+    return res.status(401).json({ message: "Geçersiz token." });
   }
 }
