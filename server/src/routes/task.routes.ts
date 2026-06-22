@@ -1,6 +1,15 @@
-import { Router, type RequestHandler } from "express";
+import {
+  Router,
+  type Request,
+  type RequestHandler,
+  type Response,
+} from "express";
 import { prisma } from "../lib/prisma";
-import { authMiddleware, type AuthRequest } from "../middleware/authMiddleware";
+import { authMiddleware } from "../middleware/authMiddleware";
+
+type AuthedRequest = Request & {
+  userId?: string;
+};
 
 function getParamValue(value: string | string[] | undefined) {
   if (Array.isArray(value)) return value[0];
@@ -11,9 +20,12 @@ const router = Router();
 
 router.use(authMiddleware);
 
-const getTasks: RequestHandler = async (req, res) => {
+const getTasks: RequestHandler = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
-    const userId = (req as AuthRequest).userId;
+    const userId = (req as AuthedRequest).userId;
 
     if (!userId) {
       res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
@@ -38,9 +50,12 @@ const getTasks: RequestHandler = async (req, res) => {
   }
 };
 
-const createTask: RequestHandler = async (req, res) => {
+const createTask: RequestHandler = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
-    const userId = (req as AuthRequest).userId;
+    const userId = (req as AuthedRequest).userId;
 
     if (!userId) {
       res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
@@ -57,7 +72,7 @@ const createTask: RequestHandler = async (req, res) => {
       dueDate,
     } = req.body;
 
-    if (!title || !title.trim()) {
+    if (!title || !String(title).trim()) {
       res.status(400).json({ message: "Görev adı zorunludur." });
       return;
     }
@@ -65,7 +80,7 @@ const createTask: RequestHandler = async (req, res) => {
     const task = await prisma.task.create({
       data: {
         userId,
-        title: title.trim(),
+        title: String(title).trim(),
         description: description ?? "",
         estimatedPomodoros: estimatedPomodoros ?? 1,
         completedPomodoros: 0,
@@ -82,9 +97,12 @@ const createTask: RequestHandler = async (req, res) => {
   }
 };
 
-const updateTask: RequestHandler = async (req, res) => {
+const updateTask: RequestHandler = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
-    const userId = (req as AuthRequest).userId;
+    const userId = (req as AuthedRequest).userId;
     const taskId = getParamValue(req.params.id);
 
     if (!taskId) {
@@ -150,9 +168,12 @@ const updateTask: RequestHandler = async (req, res) => {
   }
 };
 
-const deleteTask: RequestHandler = async (req, res) => {
+const deleteTask: RequestHandler = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
-    const userId = (req as AuthRequest).userId;
+    const userId = (req as AuthedRequest).userId;
     const taskId = getParamValue(req.params.id);
 
     if (!taskId) {
