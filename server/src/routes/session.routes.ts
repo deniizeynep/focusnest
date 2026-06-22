@@ -1,18 +1,31 @@
-import { Router } from "express";
+import {
+  Router,
+  type Request,
+  type RequestHandler,
+  type Response,
+} from "express";
 import { prisma } from "../lib/prisma";
-import { authMiddleware, AuthRequest } from "../middleware/authMiddleware";
+import { authMiddleware } from "../middleware/authMiddleware";
+
+type AuthedRequest = Request & {
+  userId?: string;
+};
 
 const router = Router();
 
 router.use(authMiddleware);
 
 // Seans oluştur
-router.post("/", async (req: AuthRequest, res) => {
+const createSession: RequestHandler = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
-    const userId = req.userId;
+    const userId = (req as AuthedRequest).userId;
 
     if (!userId) {
-      return res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      return;
     }
 
     const {
@@ -26,7 +39,8 @@ router.post("/", async (req: AuthRequest, res) => {
     } = req.body;
 
     if (!type || !durationMin || !startedAt || !completedAt) {
-      return res.status(400).json({ message: "Eksik seans bilgisi." });
+      res.status(400).json({ message: "Eksik seans bilgisi." });
+      return;
     }
 
     const session = await prisma.pomodoroSession.create({
@@ -42,18 +56,23 @@ router.post("/", async (req: AuthRequest, res) => {
       },
     });
 
-    return res.status(201).json({ session });
+    res.status(201).json({ session });
   } catch (error) {
-    return res.status(500).json({ message: "Seans kaydedilemedi." });
+    res.status(500).json({ message: "Seans kaydedilemedi." });
   }
-});
+};
 
-router.get("/", async (req: AuthRequest, res) => {
+// Seansları getir
+const getSessions: RequestHandler = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
-    const userId = req.userId;
+    const userId = (req as AuthedRequest).userId;
 
     if (!userId) {
-      return res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      return;
     }
 
     const sessions = await prisma.pomodoroSession.findMany({
@@ -62,18 +81,23 @@ router.get("/", async (req: AuthRequest, res) => {
       take: 50,
     });
 
-    return res.json({ sessions });
+    res.json({ sessions });
   } catch {
-    return res.status(500).json({ message: "Seanslar alınamadı." });
+    res.status(500).json({ message: "Seanslar alınamadı." });
   }
-});
+};
 
-router.get("/today-summary", async (req: AuthRequest, res) => {
+// Bugünkü özet
+const getTodaySummary: RequestHandler = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
-    const userId = req.userId;
+    const userId = (req as AuthedRequest).userId;
 
     if (!userId) {
-      return res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      res.status(401).json({ message: "Kullanıcı doğrulanamadı." });
+      return;
     }
 
     const startOfToday = new Date();
@@ -110,15 +134,16 @@ router.get("/today-summary", async (req: AuthRequest, res) => {
 
     const streak = calculateStreak(allWorkSessions);
 
-    return res.json({
+    res.json({
       count,
       totalMinutes,
       streak,
     });
   } catch {
-    return res.status(500).json({ message: "Bugünkü özet alınamadı." });
+    res.status(500).json({ message: "Bugünkü özet alınamadı." });
   }
-});
+};
+
 function getDateKey(date: Date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -148,5 +173,9 @@ function calculateStreak(sessions: { completedAt: Date }[]) {
 
   return streak;
 }
+
+router.post("/", createSession);
+router.get("/", getSessions);
+router.get("/today-summary", getTodaySummary);
 
 export default router;
