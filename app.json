@@ -1,21 +1,25 @@
 {
   "expo": {
-    "name": "pomodoro-app",
-    "slug": "pomodoro-app",
+    "name": "FocusNest",
+    "slug": "focusnest",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "pomodoroapp",
+    "icon": "./assets/images/focusnest-icon.png",
+    "splash": {
+      "image": "./assets/images/focusnest-splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0D0D12"
+    },
+    "scheme": "focusnest",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "com.zeynepdeniz.focusnest",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/images/focusnest-adaptive-icon.png",
+        "backgroundColor": "#0D0D12"
       },
       "predictiveBackGestureEnabled": false
     },
@@ -34,7 +38,10 @@
             "imageWidth": 76
           }
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-web-browser",
+      "@react-native-google-signin/google-signin"
     ],
     "experiments": {
       "typedRoutes": true,

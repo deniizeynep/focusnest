@@ -1,0 +1,156 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0C111D"/>
+      <stop offset="0.52" stop-color="#121826"/>
+      <stop offset="1" stop-color="#172033"/>
+    </linearGradient>
+    <linearGradient id="phone" x1="462" y1="128" x2="462" y2="872" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#151C2B"/>
+      <stop offset="1" stop-color="#0F1522"/>
+    </linearGradient>
+    <linearGradient id="phone2" x1="1138" y1="128" x2="1138" y2="872" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#161F2E"/>
+      <stop offset="1" stop-color="#0F1420"/>
+    </linearGradient>
+    <linearGradient id="timerRing" x1="462" y1="244" x2="462" y2="544" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF928B"/>
+      <stop offset="0.48" stop-color="#F6C77E"/>
+      <stop offset="1" stop-color="#9DE0C7"/>
+    </linearGradient>
+    <linearGradient id="chartGrad" x1="990" y1="394" x2="1286" y2="394" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8BE0C0"/>
+      <stop offset="1" stop-color="#B6A5FF"/>
+    </linearGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="34" stdDeviation="36" flood-color="#030712" flood-opacity="0.46"/>
+    </filter>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="28" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 1 0 1 0 0 0.55 0 0 1 0 0.43 0 0 0 0.38 0"/>
+      <feBlend in2="SourceGraphic" mode="screen"/>
+    </filter>
+    <style>
+      .title { font: 700 38px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #F8FAFC; letter-spacing: 0; }
+      .h1 { font: 700 29px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #F8FAFC; letter-spacing: 0; }
+      .h2 { font: 700 20px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #EEF2FF; letter-spacing: 0; }
+      .label { font: 600 15px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #A9B5C8; letter-spacing: 0; }
+      .small { font: 500 13px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #75839B; letter-spacing: 0; }
+      .time { font: 800 56px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #FFFFFF; letter-spacing: 0; }
+      .metric { font: 800 31px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #FFFFFF; letter-spacing: 0; }
+      .mono { font: 700 16px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #F8FAFC; letter-spacing: 0; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <circle cx="270" cy="135" r="155" fill="#203B4B" opacity="0.28"/>
+  <circle cx="1376" cy="842" r="220" fill="#372B58" opacity="0.28"/>
+  <circle cx="818" cy="188" r="95" fill="#365B4D" opacity="0.2"/>
+
+  <text x="800" y="78" text-anchor="middle" class="title">Pomodoro Mobil Uygulama Mockup</text>
+  <text x="800" y="112" text-anchor="middle" class="label">Ana Zamanlayıcı ve İstatistik ekranları</text>
+
+  <g filter="url(#shadow)">
+    <rect x="242" y="128" width="440" height="744" rx="54" fill="#050814"/>
+    <rect x="260" y="146" width="404" height="708" rx="40" fill="url(#phone)"/>
+    <rect x="412" y="160" width="100" height="10" rx="5" fill="#2B3448"/>
+  </g>
+
+  <g>
+    <text x="300" y="218" class="label">Günaydın, Zeynep</text>
+    <text x="300" y="253" class="h1">Derin odak</text>
+    <rect x="544" y="203" width="82" height="38" rx="19" fill="#202B3D"/>
+    <circle cx="567" cy="222" r="8" fill="#9DE0C7"/>
+    <text x="585" y="228" class="small" fill="#CFE8DD">Aktif</text>
+
+    <circle cx="462" cy="410" r="150" fill="#111827"/>
+    <circle cx="462" cy="410" r="127" stroke="#263246" stroke-width="18"/>
+    <path d="M462 283a127 127 0 1 1-114.1 182.7" stroke="url(#timerRing)" stroke-width="18" stroke-linecap="round" filter="url(#softGlow)"/>
+    <circle cx="462" cy="410" r="91" fill="#151C2B" stroke="#222C3F" stroke-width="1.5"/>
+    <text x="462" y="399" text-anchor="middle" class="small">Odak seansı</text>
+    <text x="462" y="451" text-anchor="middle" class="time">24:18</text>
+    <text x="462" y="482" text-anchor="middle" class="label">4 seansın 2.si</text>
+
+    <g>
+      <circle cx="409" cy="605" r="27" fill="#233147"/>
+      <path d="M401 605h16M409 597v16" stroke="#F8FAFC" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="462" cy="605" r="36" fill="#FF8E88"/>
+      <path d="M454 592h7v26h-7zM464 592h7v26h-7z" fill="#111827"/>
+      <circle cx="515" cy="605" r="27" fill="#233147"/>
+      <path d="M508 596l18 9-18 9v-18z" fill="#F8FAFC"/>
+    </g>
+
+    <text x="300" y="668" class="h2">Bugünkü görevler</text>
+    <g>
+      <rect x="300" y="690" width="324" height="58" rx="18" fill="#1B2435"/>
+      <circle cx="329" cy="719" r="11" fill="#9DE0C7"/>
+      <path d="M323 719l4 4 8-10" stroke="#0F1522" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="356" y="715" class="mono">Sprint notlarını bitir</text>
+      <text x="356" y="736" class="small">25 dk odak</text>
+    </g>
+    <g>
+      <rect x="300" y="762" width="324" height="58" rx="18" fill="#182131"/>
+      <circle cx="329" cy="791" r="11" stroke="#7D8BA3" stroke-width="2"/>
+      <text x="356" y="787" class="mono">UI akışını gözden geçir</text>
+      <text x="356" y="808" class="small">15 dk planlama</text>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="918" y="128" width="440" height="744" rx="54" fill="#050814"/>
+    <rect x="936" y="146" width="404" height="708" rx="40" fill="url(#phone2)"/>
+    <rect x="1088" y="160" width="100" height="10" rx="5" fill="#2B3448"/>
+  </g>
+
+  <g>
+    <text x="976" y="218" class="label">Haftalık görünüm</text>
+    <text x="976" y="253" class="h1">İstatistik</text>
+    <rect x="1208" y="205" width="84" height="36" rx="18" fill="#213047"/>
+    <text x="1250" y="228" text-anchor="middle" class="small" fill="#C7D2FE">Haziran</text>
+
+    <rect x="976" y="286" width="140" height="96" rx="22" fill="#1C2638"/>
+    <text x="1000" y="319" class="small">Odak</text>
+    <text x="1000" y="357" class="metric">8.4s</text>
+    <rect x="1132" y="286" width="160" height="96" rx="22" fill="#1C2638"/>
+    <text x="1156" y="319" class="small">Tamamlanan</text>
+    <text x="1156" y="357" class="metric">18</text>
+
+    <rect x="976" y="414" width="316" height="218" rx="26" fill="#192234"/>
+    <text x="1002" y="453" class="h2">Odak dağılımı</text>
+    <line x1="1002" y1="588" x2="1268" y2="588" stroke="#2A354A" stroke-width="2"/>
+    <line x1="1002" y1="538" x2="1268" y2="538" stroke="#263146" stroke-width="1"/>
+    <line x1="1002" y1="488" x2="1268" y2="488" stroke="#263146" stroke-width="1"/>
+    <path d="M1010 568C1040 526 1068 547 1094 512C1128 468 1154 490 1182 457C1218 416 1242 458 1262 435" stroke="url(#chartGrad)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M1010 568C1040 526 1068 547 1094 512C1128 468 1154 490 1182 457C1218 416 1242 458 1262 435L1262 588H1010V568Z" fill="url(#chartGrad)" opacity="0.13"/>
+    <circle cx="1182" cy="457" r="8" fill="#B6A5FF"/>
+    <text x="1004" y="615" class="small">Pzt</text>
+    <text x="1051" y="615" class="small">Sal</text>
+    <text x="1097" y="615" class="small">Çar</text>
+    <text x="1144" y="615" class="small">Per</text>
+    <text x="1191" y="615" class="small">Cum</text>
+    <text x="1237" y="615" class="small">Cmt</text>
+
+    <text x="976" y="681" class="h2">Seans hedefleri</text>
+    <g>
+      <rect x="976" y="706" width="316" height="18" rx="9" fill="#253045"/>
+      <rect x="976" y="706" width="236" height="18" rx="9" fill="#FF928B"/>
+      <text x="976" y="753" class="label">Pomodoro</text>
+      <text x="1252" y="753" text-anchor="end" class="label">74%</text>
+    </g>
+    <g>
+      <rect x="976" y="778" width="316" height="18" rx="9" fill="#253045"/>
+      <rect x="976" y="778" width="186" height="18" rx="9" fill="#9DE0C7"/>
+      <text x="976" y="825" class="label">Kısa molalar</text>
+      <text x="1252" y="825" text-anchor="end" class="label">59%</text>
+    </g>
+
+    <g>
+      <circle cx="1234" cy="670" r="43" fill="#1F2A3D"/>
+      <circle cx="1234" cy="670" r="31" stroke="#303D55" stroke-width="10"/>
+      <path d="M1234 639a31 31 0 1 1-25.1 49.2" stroke="#F6C77E" stroke-width="10" stroke-linecap="round"/>
+      <text x="1234" y="676" text-anchor="middle" class="mono">12</text>
+    </g>
+  </g>
+
+  <text x="800" y="934" text-anchor="middle" class="small">Koyu mod, pastel vurgu renkleri, net sayaç/görev/dashboard hiyerarşisi</text>
+</svg>
